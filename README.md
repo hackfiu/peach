@@ -3,15 +3,9 @@ peach is a mostly-pure GraphQL server for hackathon registrations, it is recomme
 
 We say "mostly" due to the following:
 
-Due to the nature of email verification, we must add a `POST` route on which we receive email verification requests, the structure for these are as follows:
+Due to the nature of email verification, we must add a `GET` route on which we receive the token via a query on the request, the structure of the link should look something like `http://mangohacks.com/verify?token=json.web.token`.
 
-```json
-{
-  "token": "your.jwt.token"
-}
-```
-
-And inside the JWT token we need only the following data:
+And inside the JWT we need only the following data:
 ```json
 {
   "email": "you@yourschool.edu"

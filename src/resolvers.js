@@ -7,11 +7,11 @@ const { SECRET } = process.env;
 
 initSequlize();
 
-// Queries
+// ****** Queries *******
 
 const info = () => 'This is a GraphQL Server';
 
-// Mutations
+// ****** Mutations *******
 
 const signUp = async (root, args) => {
   try {
@@ -20,7 +20,7 @@ const signUp = async (root, args) => {
     if (user) {
       throw new Error(`Email ${email} already exists.`);
     }
-    const hashed = await bcrypt.hash(password, 10);
+    const hashed = await bcrypt.hash(password);
     await User.create({
       email, password: hashed, status: 'UNVERIFIED', level: 'HACKER', application: {},
     }, { include: [Application] });
@@ -35,9 +35,9 @@ const logIn = async (root, args) => {
     const { email, password } = args;
     const user = await User.findOne({ where: { email } });
     if (user) {
-      // if (user.status === 'UNVERIFIED') {
-      //   throw new Error('User unverified');
-      // }
+      if (user.status === 'UNVERIFIED') {
+        throw new Error('User unverified');
+      }
       if (await bcrypt.compare(password, user.password)) {
         return jwt.sign({ email, level: user.level }, SECRET);
       }
