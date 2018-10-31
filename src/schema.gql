@@ -1,0 +1,68 @@
+type User {
+  email: String!
+  password: String!
+  level: Level!
+  status: Status
+  team: Team
+  application: Application!
+}
+
+type Team {
+  members: [User!]
+}
+
+type Application {
+  firstName: String
+  lastName: String
+  levelOfStudy: LevelOfStudy
+  major: String
+  shirtSize: ShirtSize
+  gender: Gender
+}
+
+type Query {
+  info: String!
+}
+
+type Mutation {
+  signUp(email: String!, password: String!): User!
+  logIn(email: String!, password: String!): User!
+}
+
+enum Level {
+  HACKER
+  SPONSOR
+  ADMIN
+}
+
+enum Status {
+  UNVERIFIED
+  VERIFIED
+  REJECTED
+  WAITLISTED
+  ACCEPTED
+  CONFIRMED
+}
+
+enum ShirtSize {
+  XSMALL
+  SMALL
+  MEDIUM
+  LARGE
+  XLARGE
+}
+
+enum LevelOfStudy {
+  FRESHMAN
+  SOPHOMORE
+  JUNIOR
+  SENIOR
+  SENIORPLUS
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+  NORESPONSE
+}

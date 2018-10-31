@@ -1,0 +1,9 @@
+{
+  "eslint.enable": true,
+  "eslint.autoFixOnSave": true,
+  "eslint.alwaysShowStatus": true,
+  "prettier.singleQuote": true,
+  "prettier.trailingComma": "all",
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.tabSize": 2
+}
