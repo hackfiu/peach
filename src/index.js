@@ -16,11 +16,7 @@ const server = new ApolloServer({
   typeDefs,
   resolvers,
   context({ req }) {
-    if (req.user) {
-      const { email, level } = req.user;
-      return { email, level };
-    }
-    return { email: null, level: null };
+    return req.user;
   },
 });
 server.applyMiddleware({ app });

@@ -25,8 +25,8 @@ type Query {
 }
 
 type Mutation {
-  signUp(email: String!, password: String!): User!
-  logIn(email: String!, password: String!): User!
+  signUp(email: String!, password: String!): String!
+  logIn(email: String!, password: String!): String!
 }
 
 enum Level {

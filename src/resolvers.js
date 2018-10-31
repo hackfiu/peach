@@ -21,15 +21,11 @@ const signUp = async (root, args) => {
       throw new Error(`Email ${email} already exists.`);
     }
     const hashed = await bcrypt.hash(password, 10);
-    const newUser = await User.create({
+    await User.create({
       email, password: hashed, status: 'UNVERIFIED', level: 'HACKER', application: {},
     }, { include: [Application] });
-    const token = jwt.sign({ email, level: 'HACKER' }, SECRET);
-    console.log({ token });
-    return newUser;
+    return jwt.sign({ email, level: 'HACKER' }, SECRET);
   } catch (err) {
-    const { message } = err;
-    console.log({ message });
     throw err;
   }
 };
@@ -38,15 +34,12 @@ const logIn = async (root, args) => {
   try {
     const { email, password } = args;
     const user = await User.findOne({ where: { email } });
-    console.log({ user });
     if (user) {
-      console.log({ peepee: 'poopoo' });
-      if (user.status === 'UNVERIFIED') {
-        throw new Error('User unverified');
-      }
+      // if (user.status === 'UNVERIFIED') {
+      //   throw new Error('User unverified');
+      // }
       if (await bcrypt.compare(password, user.password)) {
-        const token = jwt.sign({ email, level: user.level });
-        console.log({ token });
+        return jwt.sign({ email, level: user.level }, SECRET);
       }
     }
     throw new Error('Incorrect login');
