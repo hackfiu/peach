@@ -7,7 +7,7 @@ const Application = ApplicationModel(sequelize, Sequelize);
 const User = UserModel(sequelize, Sequelize);
 
 const initSequlize = () => {
-  User.hasOne(Application, { foreign_key: 'applicationID' });
+  User.hasOne(Application, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
   sequelize.sync({ force: true });
 };
 
