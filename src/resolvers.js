@@ -3,8 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import { initSequlize, User, Application } from './models';
 
-const { SECRET, SALT_ROUNDS } = process.env;
-const saltRounds = parseInt(SALT_ROUNDS);
+const { SECRET, SALT_ROUNDS, SALT_BASE } = process.env;
+const saltRounds = parseInt(SALT_ROUNDS, SALT_BASE);
 
 initSequlize();
 

@@ -21,7 +21,10 @@ const verify = async (req, res) => {
     await verifyUser(email);
     res.send({ success: true });
   } catch (err) {
-    throw err;
+    res.send({
+      success: false,
+      data: err,
+    });
   }
 };
 
