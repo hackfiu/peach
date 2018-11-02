@@ -3,7 +3,8 @@ import jwt from 'jsonwebtoken';
 
 import { initSequlize, User, Application } from './models';
 
-const { SECRET } = process.env;
+const { SECRET, SALT_ROUNDS } = process.env;
+const saltRounds = parseInt(SALT_ROUNDS);
 
 initSequlize();
 
@@ -20,7 +21,7 @@ const signUp = async (root, args) => {
     if (user) {
       throw new Error(`Email ${email} already exists.`);
     }
-    const hashed = await bcrypt.hash(password);
+    const hashed = await bcrypt.hash(password, saltRounds);
     await User.create({
       email, password: hashed, status: 'UNVERIFIED', level: 'HACKER', application: {},
     }, { include: [Application] });
