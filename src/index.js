@@ -6,10 +6,10 @@ import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema.gql';
 import resolvers from './resolvers';
 
-import verify from './controllers/verify';
+import router from './routes';
 
 dotenv.config();
-const { PORT, SECRET } = process.env;
+const { PORT, SECRET, SERVER_URL } = process.env;
 
 const app = express();
 
@@ -22,9 +22,8 @@ const server = new ApolloServer({
 });
 
 app.use(jwt({ secret: SECRET, credentialsRequired: false }));
-
-app.get('/verify', verify);
+app.use('/api', router);
 
 server.applyMiddleware({ app });
 
-app.listen({ port: PORT }, () => console.log(`🍑  Server up on http://localhost:${PORT}${server.graphqlPath}`));
+app.listen({ port: PORT }, () => console.log(`🍑  Server up on ${SERVER_URL}:${PORT}${server.graphqlPath}`));
