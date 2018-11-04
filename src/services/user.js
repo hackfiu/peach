@@ -3,11 +3,11 @@ import { User } from '../models';
 
 const { SECRET } = process.env;
 
-const verifyUser = async (email) => {
+const verifyUser = async (id) => {
   try {
     await User.update(
       { status: 'VERIFIED' },
-      { where: { email } },
+      { where: { id } },
     );
   } catch (err) {
     throw err;
@@ -17,8 +17,8 @@ const verifyUser = async (email) => {
 const verify = async (req, res) => {
   try {
     const { token } = req.query;
-    const { email } = jwt.verify(token, SECRET);
-    await verifyUser(email);
+    const { id } = jwt.verify(token, SECRET);
+    await verifyUser(id);
     res.send({ success: true });
   } catch (err) {
     res.send({
