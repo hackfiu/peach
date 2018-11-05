@@ -36,7 +36,14 @@ type Mutation {
     shirtSize: ShirtSize
     gender: Gender
   ): Application!
-  submitApplication: Application!
+  submitApplication(
+    firstName: String!
+    lastName: String!
+    levelOfStudy: LevelOfStudy!
+    major: String!
+    shirtSize: ShirtSize!
+    gender: Gender!
+  ): Application!
 }
 
 enum Level {
@@ -48,6 +55,7 @@ enum Level {
 enum Status {
   UNVERIFIED
   VERIFIED
+  SUBMITTED
   REJECTED
   WAITLISTED
   ACCEPTED
