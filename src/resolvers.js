@@ -55,6 +55,28 @@ const logIn = async (root, args) => {
   }
 };
 
+const updateApplication = async (root, args, context) => {
+  try {
+    const { id, level } = context;
+    if (!id) {
+      throw new ForbiddenError('User is not logged in.');
+    }
+    if (level !== 'HACKER') {
+      throw new ForbiddenError('User is not a HACKER.');
+    }
+    const {
+      firstName, lastName, levelOfStudy, major, shirtSize, gender,
+    } = args;
+    const application = await Application.update({
+      firstName, lastName, levelOfStudy, major, shirtSize, gender,
+    },
+    { where: { userId: id } });
+    return application;
+  } catch (err) {
+    throw err;
+  }
+};
+
 const resolvers = {
   Query: {
     info,
@@ -62,6 +84,7 @@ const resolvers = {
   Mutation: {
     signUp,
     logIn,
+    updateApplication,
   },
 };
 

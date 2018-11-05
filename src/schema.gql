@@ -28,6 +28,15 @@ type Query {
 type Mutation {
   signUp(email: String!, password: String!): String!
   logIn(email: String!, password: String!): String!
+  updateApplication(
+    firstName: String
+    lastName: String
+    levelOfStudy: LevelOfStudy
+    major: String
+    shirtSize: ShirtSize
+    gender: Gender
+  ): Application!
+  submitApplication: Application!
 }
 
 enum Level {
