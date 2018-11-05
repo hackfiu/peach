@@ -3,10 +3,10 @@ import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
 
-import { initSequelize } from './models';
 import typeDefs from './schema.gql';
 import resolvers from './resolvers';
 
+import { initSequelize } from './models';
 import router from './routes';
 
 dotenv.config();
