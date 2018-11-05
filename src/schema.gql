@@ -21,6 +21,7 @@ type Application {
 }
 
 type Query {
+  user(email: String!): User
   info: String!
 }
 

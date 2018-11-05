@@ -1,30 +1,38 @@
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
-import { initSequlize, User, Application } from './models';
+import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 
-const { SECRET } = process.env;
+import { User, Application } from './models';
 
-initSequlize();
+const { SECRET, SALT_ROUNDS } = process.env;
+const saltRounds = parseInt(SALT_ROUNDS);
 
-// Queries
+// ****** Queries *******
 
 const info = () => 'This is a GraphQL Server';
 
-// Mutations
+// ****** Mutations *******
 
 const signUp = async (root, args) => {
   try {
     const { email, password } = args;
     const user = await User.findOne({ where: { email } });
     if (user) {
-      throw new Error(`Email ${email} already exists.`);
+      throw new AuthenticationError(`Email ${email} already exists.`);
     }
-    const hashed = await bcrypt.hash(password, 10);
-    await User.create({
-      email, password: hashed, status: 'UNVERIFIED', level: 'HACKER', application: {},
-    }, { include: [Application] });
-    return jwt.sign({ email, level: 'HACKER' }, SECRET);
+    const hashed = await bcrypt.hash(password, saltRounds);
+    const { id } = await User.create(
+      {
+        email,
+        password: hashed,
+        status: 'UNVERIFIED',
+        level: 'HACKER',
+        application: {},
+      },
+      { include: [Application] },
+    );
+    return jwt.sign({ id, level: 'HACKER' }, SECRET);
   } catch (err) {
     throw err;
   }
@@ -34,15 +42,14 @@ const logIn = async (root, args) => {
   try {
     const { email, password } = args;
     const user = await User.findOne({ where: { email } });
-    if (user) {
-      // if (user.status === 'UNVERIFIED') {
-      //   throw new Error('User unverified');
-      // }
-      if (await bcrypt.compare(password, user.password)) {
-        return jwt.sign({ email, level: user.level }, SECRET);
-      }
+    if (!user || !await bcrypt.compare(password, user.password)) {
+      throw new AuthenticationError('Incorrect login');
     }
-    throw new Error('Incorrect login');
+    const { id, level, status } = user;
+    if (status === 'UNVERIFIED') {
+      throw new ForbiddenError('User unverified');
+    }
+    return jwt.sign({ id, level }, SECRET);
   } catch (err) {
     throw err;
   }

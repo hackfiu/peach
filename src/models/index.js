@@ -6,9 +6,9 @@ import UserModel from './user';
 const Application = ApplicationModel(sequelize, Sequelize);
 const User = UserModel(sequelize, Sequelize);
 
-const initSequlize = () => {
-  User.hasOne(Application, { foreignKey: { allowNull: false }, onDelete: 'CASCADE' });
+const initSequelize = () => {
+  User.hasOne(Application, { foreignKey: { allowNull: true }, onDelete: 'CASCADE' });
   sequelize.sync({ force: true });
 };
 
-export { Application, User, initSequlize };
+export { Application, User, initSequelize };
