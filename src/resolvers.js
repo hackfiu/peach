@@ -32,7 +32,8 @@ const signUp = async (root, args) => {
       },
       { include: [Application] },
     );
-    return jwt.sign({ id, level: 'HACKER' }, SECRET);
+    const token = jwt.sign({ id, level: 'HACKER' }, SECRET);
+    return { token };
   } catch (err) {
     throw err;
   }
@@ -42,14 +43,15 @@ const logIn = async (root, args) => {
   try {
     const { email, password } = args;
     const user = await User.findOne({ where: { email } });
-    if (!user || !await bcrypt.compare(password, user.password)) {
+    if (!user || !(await bcrypt.compare(password, user.password))) {
       throw new AuthenticationError('Incorrect login');
     }
     const { id, level, status } = user;
     if (status === 'UNVERIFIED') {
       throw new ForbiddenError('User unverified');
     }
-    return jwt.sign({ id, level }, SECRET);
+    const token = jwt.sign({ id, level }, SECRET);
+    return { token };
   } catch (err) {
     throw err;
   }
@@ -64,8 +66,7 @@ const updateApplication = async (root, args, context) => {
     if (level !== 'HACKER') {
       throw new ForbiddenError('User is not a HACKER.');
     }
-    const application = await applicationService
-      .updateApplication(id, args);
+    const application = await applicationService.updateApplication(id, args);
     return application;
   } catch (err) {
     throw err;
@@ -81,8 +82,7 @@ const submitApplication = async (root, args, context) => {
     if (level !== 'HACKER') {
       throw new ForbiddenError('User is not a HACKER.');
     }
-    const application = await applicationService
-      .updateApplication(id, args);
+    const application = await applicationService.updateApplication(id, args);
     await userService.updateStatus(id, 'SUBMITTED');
     console.log(application);
     return application;

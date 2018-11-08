@@ -4,3 +4,4 @@ yarn.lock
 /build
 
 .env
+google.json
