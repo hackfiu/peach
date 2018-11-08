@@ -1,0 +1,12 @@
+{
+  "type": "npm",
+  "name": "peach",
+  "alias": "peach",
+  "dotenv": true,
+  "scale": {
+    "sfo1": {
+      "min": 1,
+      "max": "auto"
+    }
+  }
+}
