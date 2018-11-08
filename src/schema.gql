@@ -25,9 +25,13 @@ type Query {
   info: String!
 }
 
+type Token {
+  token: String!
+}
+
 type Mutation {
-  signUp(email: String!, password: String!): String!
-  logIn(email: String!, password: String!): String!
+  signUp(email: String!, password: String!): Token!
+  logIn(email: String!, password: String!): Token!
   updateApplication(
     firstName: String
     lastName: String
