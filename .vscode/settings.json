@@ -5,5 +5,6 @@
   "prettier.singleQuote": true,
   "prettier.trailingComma": "all",
   "javascript.updateImportsOnFileMove.enabled": "always",
-  "editor.tabSize": 2
+  "editor.tabSize": 2,
+  "editor.formatOnSave": false
 }

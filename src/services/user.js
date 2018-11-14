@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+
 import { User } from '../models';
 
 const { SECRET } = process.env;
