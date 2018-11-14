@@ -3,8 +3,8 @@ import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
 
-import typeDefs from './schema.gql';
-import resolvers from './resolvers';
+import typeDefs from './graphql/schema.gql';
+import resolvers from './graphql/resolvers';
 
 import { initSequelize } from './models';
 import router from './routes';
