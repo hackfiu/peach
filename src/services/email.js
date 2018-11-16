@@ -1,50 +1,26 @@
-import path from 'path';
-import { createTransport } from 'nodemailer';
-import Email from 'email-templates';
+import { Banana } from 'banana-mail';
 
-const { EMAIL, EMAIL_PASSWORD } = process.env;
+const { BANANA_EMAIL, BANANA_PASS } = process.env;
 
-const smtpTransport = createTransport({
+const banana = new Banana({
   service: 'gmail',
-  auth: { user: EMAIL, pass: EMAIL_PASSWORD },
+  templatePath: 'src/templates',
+  auth: {
+    user: BANANA_EMAIL,
+    pass: BANANA_PASS,
+  },
 });
 
-const sendMail = mail => new Promise((resolve, reject) => {
-  smtpTransport.sendMail(mail, (err) => {
-    smtpTransport.close();
-    if (err) reject(err);
-    resolve();
-  });
-});
+const sendVerification = async (email, token) => {
+  const message = {
+    to: email,
+    subject: '[Peach] Verify Your Email',
+    template: 'verify',
+    context: {
+      token,
+    },
+  };
+  await banana.send([message]);
+};
 
-const loadTemplate = (templateName, hacker) => new Promise(async (resolve, reject) => {
-  const templateDir = path.resolve(`src/templates/emails/${templateName}`);
-  const template = new Email({ views: { options: { extension: 'hbs' } } });
-
-  try {
-    const hackerTemplate = template.renderAll(templateDir, hacker);
-    resolve(hackerTemplate);
-  } catch (e) {
-    reject(e);
-  }
-});
-
-const send = (hacker, templateName) => new Promise(async (resolve, reject) => {
-  const hackerTemplate = await loadTemplate(templateName, hacker);
-
-  try {
-    const mail = {
-      to: hacker.email,
-      from: EMAIL,
-      subject: hackerTemplate.subject,
-      html: hackerTemplate.html,
-      text: hackerTemplate.text,
-    };
-
-    resolve(sendMail(mail));
-  } catch (e) {
-    reject(e);
-  }
-});
-
-export default { send };
+export default { sendVerification };
