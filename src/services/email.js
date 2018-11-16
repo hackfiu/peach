@@ -20,7 +20,11 @@ const sendVerification = async (email, token) => {
       token,
     },
   };
-  await banana.send([message]);
+  try {
+    await banana.send([message]);
+  } catch (err) {
+    throw err;
+  }
 };
 
 const sendDecisions = async (hackers, decision) => {
@@ -37,7 +41,11 @@ const sendDecisions = async (hackers, decision) => {
     };
     return message;
   });
-  await banana.send(messages);
+  try {
+    await banana.send(messages);
+  } catch (err) {
+    throw err;
+  }
 };
 
 export default { sendVerification, sendDecisions };
