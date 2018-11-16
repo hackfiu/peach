@@ -1,29 +1,17 @@
 # peach
-peach is a mostly-pure GraphQL server for hackathon registrations, it is recommended to use this alongside [mango](http://github.com/hackfiu/mango).
-
-We say "mostly" due to the following:
-
-Due to the nature of email verification, we must add a `GET` route on which we receive the token via a query on the request, the structure of the link should look something like `http://mangohacks.com/api/verify?token=json.web.token`.
-
-And inside the JWT we need only the following data:
-```json
-{
-  "email": "you@yourschool.edu"
-}
-```
-
-Asides from this, we run a pure GraphQL server.
+peach is a pure GraphQL server for hackathon registrations, it is recommended to use this alongside [mango](http://github.com/hackfiu/mango).
 
 The schema should contain all the necessary information to understand the structure and usage of the server, it can be found in `src/schema.gql`, and it contains the following:
 
 ```graphql
 type User {
+  id: ID!
   email: String!
   password: String!
   level: Level!
   status: Status
   team: Team
-  application: Application!
+  application: Application
 }
 
 type Team {
@@ -31,6 +19,7 @@ type Team {
 }
 
 type Application {
+  id: ID!
   firstName: String
   lastName: String
   levelOfStudy: LevelOfStudy
@@ -40,12 +29,35 @@ type Application {
 }
 
 type Query {
+  user(id: ID!): User!
+  application(id: ID!): Application!
   info: String!
 }
 
+type Token {
+  token: String!
+}
+
 type Mutation {
-  signUp(email: String!, password: String!): String!
-  logIn(email: String!, password: String!): String!
+  signUp(email: String!, password: String!)
+  logIn(email: String!, password: String!): Token!
+  verify(token: Token!): Token!
+  updateApplication(
+    firstName: String
+    lastName: String
+    levelOfStudy: LevelOfStudy
+    major: String
+    shirtSize: ShirtSize
+    gender: Gender
+  ): Application!
+  submitApplication(
+    firstName: String!
+    lastName: String!
+    levelOfStudy: LevelOfStudy!
+    major: String!
+    shirtSize: ShirtSize!
+    gender: Gender!
+  ): Application!
 }
 
 enum Level {
@@ -57,6 +69,7 @@ enum Level {
 enum Status {
   UNVERIFIED
   VERIFIED
+  SUBMITTED
   REJECTED
   WAITLISTED
   ACCEPTED

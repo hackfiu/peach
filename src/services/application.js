@@ -11,14 +11,14 @@ const updateApplication = async (userId, args) => {
     const {
       firstName, lastName, levelOfStudy, major, shirtSize, gender,
     } = args;
-    const update = await Application.update({
+    await Application.update({
       firstName, lastName, levelOfStudy, major, shirtSize, gender,
     },
     {
       where: { userId },
-      returning: true,
     });
-    return update[1][0];
+    const application = Application.findOne({ where: { userId } });
+    return application;
   } catch (err) {
     throw err;
   }

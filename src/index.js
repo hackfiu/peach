@@ -7,7 +7,6 @@ import typeDefs from './graphql/schema.gql';
 import resolvers from './graphql/resolvers';
 
 import { initSequelize } from './models';
-import router from './routes';
 
 dotenv.config();
 const { PORT, SECRET, SERVER_URL } = process.env;
@@ -23,7 +22,6 @@ const server = new ApolloServer({
 });
 
 app.use(jwt({ secret: SECRET, credentialsRequired: false }));
-app.use('/api', router);
 
 server.applyMiddleware({ app });
 
