@@ -1,4 +1,3 @@
-import dotenv from 'dotenv';
 import express from 'express';
 import jwt from 'express-jwt';
 import { ApolloServer } from 'apollo-server-express';
@@ -8,7 +7,6 @@ import resolvers from './graphql/resolvers';
 
 import { initSequelize } from './models';
 
-dotenv.config();
 const { PORT, SECRET, SERVER_URL } = process.env;
 
 const app = express();
@@ -16,7 +14,13 @@ const app = express();
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context({ req }) {
+  formatError(err) {
+    console.error(err);
+    const { message, extensions: { code } } = err;
+    return { message, extensions: { code } };
+  },
+  context(ctx) {
+    const { req } = ctx;
     return req.user;
   },
 });

@@ -6,7 +6,7 @@ const updateStatus = async (id, newStatus) => {
       { status: newStatus },
       { where: { id } },
     );
-    const user = await User.findById(id);
+    const user = await User.findByPk(id);
     return user;
   } catch (err) {
     throw err;

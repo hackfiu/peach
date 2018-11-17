@@ -4,7 +4,7 @@ import { Application, User } from '../models';
 
 const updateApplication = async (userId, args) => {
   try {
-    const { status } = await User.findById(userId);
+    const { status } = await User.findByPk(userId);
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }

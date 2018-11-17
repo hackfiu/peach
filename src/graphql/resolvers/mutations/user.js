@@ -30,6 +30,7 @@ const signUp = async (root, args) => {
     );
     const token = jwt.sign({ id, verification: true }, SECRET);
     await emailService.sendVerification(email, token);
+    return email;
   } catch (err) {
     throw err;
   }
@@ -55,19 +56,19 @@ const logIn = async (root, args) => {
 };
 
 const verify = async (root, args) => {
-  const { token: { token } } = args;
+  const { token } = args;
   try {
     const { id, verification } = jwt.verify(token, SECRET);
     if (!verification) {
-      throw new AuthenticationError('Invalid verification token.');
+      throw new AuthenticationError('Invalid token.');
     }
     const user = await userService.updateStatus(id, 'VERIFIED');
     const { level } = user;
-    const loginToken = jwt.sign({ id, level });
+    const loginToken = jwt.sign({ id, level }, SECRET);
     return { token: loginToken };
   } catch (err) {
     throw err;
   }
 };
 
-export { verify, signUp, logIn };
+export { signUp, logIn, verify };
