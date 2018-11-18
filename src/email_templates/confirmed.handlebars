@@ -43,7 +43,12 @@
 
   .container {
     font-family: 'Poppins', sans-serif;
-    background-color: #88D0EE;
+    background-color: {
+        {
+        config.backgroundColor
+      }
+    }
+    ;
     margin: 0px auto;
     padding: 0px 100px;
   }
@@ -141,13 +146,13 @@ platforms --}}
           {{!-- Header --}}
           <tr class="card-logo">
             <td>
-              <img src="https://floatie.floridahackers.com/assets/img/floatie.png" width="10rem">
+              <img src={{config.logoPath}} width="10rem">
             </td>
           </tr>
           <tr>
             <td>
               <h2>
-                Confirm {{first_name}}!
+                Confirm {{ firstName }}
               </h2>
             </td>
           </tr>
@@ -166,17 +171,14 @@ platforms --}}
           {{!-- Body --}}
           <tr>
             <td class="card-content">
-              Be on the lookout for an email confirming your spot. We're super excited to have you join us in Miami, FL Feb 2nd - 4th for
-              a sweet weekend. We will be sending a bus to North Florida, stopping at FSU, UF, and UCF. We'll release details
-              about reserving you a spot on social media and through email in the coming days. For next steps, just sit tight
-              and we'll be sending out rolling acceptances
+              {{ config.hackathon }} Confirm
             </td>
           </tr>
           <tr>
             <td>
-              <a href="https://floridahackers.com">
+              <a href="{{config.mangoUrl}}">
                 <button class="submit">
-                  Register
+                  Verify
                 </button>
               </a>
             </td>
@@ -187,24 +189,24 @@ platforms --}}
             <td>
               <p>
                 <span class="light">Have a question? Reach out at</span>
-                <a href="mailto:hypefiu@gmail.com">team@mangohacks.com</a>
+                <a href="mailto:{{config.email}}">{{config.email}}</a>
               </p>
             </td>
           </tr>
           <tr class="social-media">
             <td class="facebook" align="center">
-              <a href="https://www.facebook.com/floridahackers">
+              <a href={{config.facebookUrl}}>
                 <img src="https://i.imgur.com/CZOS2up.png" height="20px">
               </a>
             </td>
 
             <td class="twitter" align="center">
-              <a href="https://www.twitter.com/floridahackers">
+              <a href={{config.twitterUrl}}>
                 <img src="https://i.imgur.com/4G7Yajp.png" height="20px">
               </a>
             </td>
             <td class="instagram" align="center">
-              <a href="https://www.instagram.com/hackfiu">
+              <a href={{config.instagramUrl}}>
                 <img src="https://i.imgur.com/3SvBpxh.png" height="20px">
               </a>
             </td>
