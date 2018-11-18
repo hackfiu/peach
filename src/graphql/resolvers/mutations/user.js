@@ -4,12 +4,15 @@ import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 
 import { User, Application } from '../../../models';
 
+import userService from '../../../services/user';
+import emailService from '../../../services/email';
+
 const { SECRET, SALT_ROUNDS } = process.env;
 const saltRounds = parseInt(SALT_ROUNDS);
 
 const signUp = async (root, args) => {
+  const { email, password } = args;
   try {
-    const { email, password } = args;
     const user = await User.findOne({ where: { email } });
     if (user) {
       throw new AuthenticationError(`Email ${email} already exists.`);
@@ -25,19 +28,20 @@ const signUp = async (root, args) => {
       },
       { include: [Application] },
     );
-    const token = jwt.sign({ id, level: 'HACKER' }, SECRET);
-
-    return { token };
+    const token = jwt.sign({ id, verification: true }, SECRET);
+    await emailService.sendVerification(email, token);
+    return email;
   } catch (err) {
     throw err;
   }
 };
 
 const logIn = async (root, args) => {
+  const { email, password } = args;
   try {
-    const { email, password } = args;
     const user = await User.findOne({ where: { email } });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+    const correctPassword = await bcrypt.compare(password, user.password);
+    if (!user || !correctPassword) {
       throw new AuthenticationError('Incorrect login');
     }
     const { id, level, status } = user;
@@ -51,4 +55,20 @@ const logIn = async (root, args) => {
   }
 };
 
-export { signUp, logIn };
+const verify = async (root, args) => {
+  const { token } = args;
+  try {
+    const { id, verification } = jwt.verify(token, SECRET);
+    if (!verification) {
+      throw new AuthenticationError('Invalid token.');
+    }
+    const user = await userService.updateStatus(id, 'VERIFIED');
+    const { level } = user;
+    const loginToken = jwt.sign({ id, level }, SECRET);
+    return { token: loginToken };
+  } catch (err) {
+    throw err;
+  }
+};
+
+export { signUp, logIn, verify };

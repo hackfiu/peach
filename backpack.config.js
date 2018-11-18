@@ -1,5 +1,6 @@
 module.exports = {
-  webpack: config => {
+  webpack(config) {
+    // eslint-disable-next-line no-param-reassign
     config.module.rules = [
       {
         test: /\.(graphql|gql)$/,
