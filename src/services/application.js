@@ -4,7 +4,10 @@ import { Application, User } from '../models';
 
 const updateApplication = async (userId, args) => {
   try {
-    const { status } = await User.findByPk(userId);
+    const { status, level } = await User.findByPk(userId);
+    if (level !== 'HACKER') {
+      throw new ForbiddenError('User is not a HACKER.');
+    }
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
