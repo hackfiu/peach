@@ -35,3 +35,11 @@ config = {
 ```
 
 This where you set all of your config variables for the email templates. For example, mangoUrl is set for whatever url your frontend (Powered by the sweet front end client mango) is. 
+
+## Inline styling
+
+Another email standard includes adding inline css styles and not have them be separate to the file or even additional as a `<style>` element
+
+To create handlebar files with inline css simply add your css to the file's respective `<style>` block and then use a website like https://inliner.cm/ to convert the html to html with inline css
+
+the file `default.handlebars` contains unchanged html and css templating without adding the inline css. 
