@@ -4,21 +4,21 @@ import { Application, User } from '../models';
 
 const updateApplication = async (userId, args) => {
   try {
-    const { status } = await User.findById(userId);
+    const { status } = await User.findByPk(userId);
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
     const {
       firstName, lastName, levelOfStudy, major, shirtSize, gender,
     } = args;
-    const update = await Application.update({
+    await Application.update({
       firstName, lastName, levelOfStudy, major, shirtSize, gender,
     },
     {
       where: { userId },
-      returning: true,
     });
-    return update[1][0];
+    const application = Application.findOne({ where: { userId } });
+    return application;
   } catch (err) {
     throw err;
   }

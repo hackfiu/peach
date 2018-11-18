@@ -1,10 +1,11 @@
 type User {
+  id: ID!
   email: String!
   password: String!
   level: Level!
   status: Status
   team: Team
-  application: Application!
+  application: Application
 }
 
 type Team {
@@ -12,6 +13,7 @@ type Team {
 }
 
 type Application {
+  id: ID!
   firstName: String
   lastName: String
   levelOfStudy: LevelOfStudy
@@ -21,7 +23,8 @@ type Application {
 }
 
 type Query {
-  user(email: String!): User
+  user(id: ID!): User!
+  application(id: ID!): Application!
   info: String!
 }
 
@@ -30,8 +33,9 @@ type Token {
 }
 
 type Mutation {
-  signUp(email: String!, password: String!): Token!
+  signUp(email: String!, password: String!): String!
   logIn(email: String!, password: String!): Token!
+  verify(token: String!): Token!
   updateApplication(
     firstName: String
     lastName: String
