@@ -35,7 +35,3 @@ config = {
 ```
 
 This where you set all of your config variables for the email templates. For example, mangoUrl is set for whatever url your frontend (Powered by the sweet front end client mango) is. 
-
-
-
-
