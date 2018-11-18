@@ -24,7 +24,6 @@ const submitApplication = async (root, args, context) => {
     }
     const application = await applicationService.updateApplication(id, args);
     await userService.updateStatus(id, 'SUBMITTED');
-    console.log(application);
     return application;
   } catch (err) {
     throw err;
