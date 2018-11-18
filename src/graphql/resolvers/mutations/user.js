@@ -28,9 +28,12 @@ const signUp = async (root, args) => {
       },
       { include: [Application] },
     );
-    const token = jwt.sign({ id, verification: true }, SECRET);
-    await emailService.sendVerification(email, token);
-    return email;
+
+    const verificationToken = jwt.sign({ id, verification: true }, SECRET);
+    await emailService.sendVerification(email, verificationToken);
+
+    const loginToken = jwt.sign({ id }, SECRET);
+    return { token: loginToken };
   } catch (err) {
     throw err;
   }
@@ -44,12 +47,12 @@ const logIn = async (root, args) => {
     if (!user || !correctPassword) {
       throw new AuthenticationError('Incorrect login');
     }
-    const { id, level, status } = user;
+    const { id, status } = user;
     if (status === 'UNVERIFIED') {
       throw new ForbiddenError('User unverified');
     }
-    const token = jwt.sign({ id, level }, SECRET);
-    return { token };
+    const loginToken = jwt.sign({ id }, SECRET);
+    return { token: loginToken };
   } catch (err) {
     throw err;
   }
@@ -62,9 +65,8 @@ const verify = async (root, args) => {
     if (!verification) {
       throw new AuthenticationError('Invalid token.');
     }
-    const user = await userService.updateStatus(id, 'VERIFIED');
-    const { level } = user;
-    const loginToken = jwt.sign({ id, level }, SECRET);
+    await userService.updateStatus(id, 'VERIFIED');
+    const loginToken = jwt.sign({ id }, SECRET);
     return { token: loginToken };
   } catch (err) {
     throw err;
