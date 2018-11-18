@@ -1,4 +1,5 @@
 import { Banana } from 'banana-mail';
+import config from '../config';
 
 const { BANANA_SERVICE, BANANA_EMAIL, BANANA_PASS } = process.env;
 
@@ -17,6 +18,7 @@ const sendVerification = async (email, token) => {
     subject: '[Peach] Verify Your Email',
     template: 'verify',
     context: {
+      config,
       token,
     },
   };
@@ -35,6 +37,7 @@ const sendDecisions = async (hackers, decision) => {
       subject: '[Peach] Update on Your Application',
       template: decision,
       context: {
+        config,
         firstName,
         lastName,
       },

@@ -1,0 +1,220 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html>
+<style>
+  /* Setting defaults for ios email */
+
+  a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: none !important;
+    font-size: inherit !important;
+    font-family: inherit !important;
+    font-weight: inherit !important;
+    line-height: inherit !important;
+  }
+
+  /* --------------------*/
+
+  body {
+    margin: 0px;
+    padding: 0px;
+  }
+
+  hr {
+    border: 0.5px solid rgba(0, 0, 0, 0.1);
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+
+  /* --------------------- */
+
+  .light {
+    font-weight: 300;
+  }
+
+  .semi-bold {
+    font-weight: 500;
+  }
+
+
+  /* --------------------- */
+
+  .container {
+    font-family: 'Poppins', sans-serif;
+    background-color: {
+        {
+        config.backgroundColor
+      }
+    }
+    ;
+    margin: 0px auto;
+    padding: 0px 100px;
+  }
+
+  .card {
+    text-align: center;
+    background-color: #fff;
+    padding: 40px 50px;
+    border-radius: 10px;
+    margin: 20px 0px;
+  }
+
+  .card-logo img {
+    width: 10rem;
+  }
+
+  .card-content {
+    padding: 0px 25px;
+  }
+
+  .announcement-image {
+    max-width: 60%;
+  }
+
+  .submit {
+    margin: 15px 0px;
+    background: rgb(136, 208, 238);
+    color: white;
+    font-size: 18px;
+    width: 60%;
+    height: 50px;
+    border: none;
+    border-radius: 50px;
+    font-weight: 600;
+  }
+
+  .social-media {
+    display: inline;
+    justify-content: center !important;
+    text-align: center !important;
+    padding: 0px 150px;
+  }
+
+  .social-media img {
+    padding: 10px;
+  }
+
+
+  /* --------------------- */
+
+  .footer {
+    background-color: #f5f5f5;
+    border-radius: 15px;
+  }
+
+  /* Mobile media queries */
+
+  @media screen and (max-width: 600px) {
+    body {
+      max-width: 600px;
+    }
+
+    .social-media {
+      display: flex !important;
+      justify-content: center !important;
+      text-align: center !important;
+    }
+
+    .card {
+      margin: 0px 50px;
+    }
+  }
+</style>
+
+<head>
+  <meta name="x-apple-disable-message-reformatting" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300" rel="stylesheet">
+</head>
+
+{{!-- This is the layout for all templates Tables are the most supported html elements for aligning and structuring html
+elements for email templates. For that reason, we went forward with tables to create templates that work on different email
+platforms --}}
+
+<body>
+  {{!-- Container element that holds the entire email --}}
+  <table class="container">
+    <tr>
+      <td align="center">
+        {{!-- Card element that holds all the HTML within --}}
+        <table class="card">
+          {{!-- Header --}}
+          <tr class="card-logo">
+            <td>
+              <img src={{config.logoPath}} width="10rem">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h2>
+                Waitlist {{ firstName }}
+              </h2>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <img src="https://cdn-images-1.medium.com/max/1200/1*l0lbQKPIEa-n4mftsS81TQ.gif" class="announcement-image">
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <h2>
+                What now?
+              </h2>
+            </td>
+          </tr>
+          {{!-- Body --}}
+          <tr>
+            <td class="card-content">
+              {{ config.hackathon }} Waitlisted
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <a href="{{config.mangoUrl}}">
+                <button class="submit">
+                  Verify
+                </button>
+              </a>
+            </td>
+          </tr>
+
+          {{!-- Footer --}}
+          <tr class="footer">
+            <td>
+              <p>
+                <span class="light">Have a question? Reach out at</span>
+                <a href="mailto:{{config.email}}">{{config.email}}</a>
+              </p>
+            </td>
+          </tr>
+          <tr class="social-media">
+            <td class="facebook" align="center">
+              <a href={{config.facebookUrl}}>
+                <img src="https://i.imgur.com/CZOS2up.png" height="20px">
+              </a>
+            </td>
+
+            <td class="twitter" align="center">
+              <a href={{config.twitterUrl}}>
+                <img src="https://i.imgur.com/4G7Yajp.png" height="20px">
+              </a>
+            </td>
+            <td class="instagram" align="center">
+              <a href={{config.instagramUrl}}>
+                <img src="https://i.imgur.com/3SvBpxh.png" height="20px">
+              </a>
+            </td>
+          </tr>
+        </table>
+    </tr>
+    </tr>
+  </table>
+</body>
+
+</html>
