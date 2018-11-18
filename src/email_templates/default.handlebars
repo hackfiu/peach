@@ -1,9 +1,6 @@
-{{!-- Shouldn't be used this is just a template that has default styles without being inlune --}}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html>
 <style>
-  /* Setting defaults for ios email */
-
   a[x-apple-data-detectors] {
     color: inherit !important;
     text-decoration: none !important;
@@ -13,7 +10,7 @@
     line-height: inherit !important;
   }
 
-  /* --------------------*/
+
 
   body {
     margin: 0px;
@@ -29,7 +26,7 @@
     color: inherit;
   }
 
-  /* --------------------- */
+
 
   .light {
     font-weight: 300;
@@ -38,9 +35,6 @@
   .semi-bold {
     font-weight: 500;
   }
-
-
-  /* --------------------- */
 
   .container {
     font-family: 'Poppins', sans-serif;
@@ -97,16 +91,6 @@
     padding: 10px;
   }
 
-
-  /* --------------------- */
-
-  .footer {
-    background-color: #f5f5f5;
-    border-radius: 15px;
-  }
-
-  /* Mobile media queries */
-
   @media screen and (max-width: 600px) {
     body {
       max-width: 600px;
@@ -125,9 +109,8 @@
 </style>
 
 <head>
-  <meta name="x-apple-disable-message-reformatting" />
-  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
-  <meta content="IE=edge" http-equiv="X-UA-Compatible" />
+  <meta name="x-apple-disable-message-reformatting">
+  <meta content="IE=edge" http-equiv="X-UA-Compatible">
   <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Poppins:300" rel="stylesheet">
@@ -137,84 +120,93 @@
 elements for email templates. For that reason, we went forward with tables to create templates that work on different email
 platforms --}}
 
-<body>
+<body style="margin-top: 0px;margin-bottom: 0px;margin-right: 0px;margin-left: 0px;padding-top: 0px;padding-bottom: 0px;padding-right: 0px;padding-left: 0px;margin: 0px;padding: 0px;"
+  align="center">
   {{!-- Container element that holds the entire email --}}
-  <table class="container">
+  <table class="container" style="font-family:'Poppins', sans-serif;background-color:{{config.backgroundColor}}; width: 100%;"
+    align="center">
     <tr>
       <td align="center">
         {{!-- Card element that holds all the HTML within --}}
-        <table class="card">
-          {{!-- Header --}}
-          <tr class="card-logo">
-            <td>
-              <img src={{config.logoPath}} width="10rem">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <h2>
-                Submitted {{ firstName }}
-              </h2>
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <img src="https://cdn-images-1.medium.com/max/1200/1*l0lbQKPIEa-n4mftsS81TQ.gif" class="announcement-image">
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <h2>
-                What now?
-              </h2>
-            </td>
-          </tr>
-          {{!-- Body --}}
-          <tr>
-            <td class="card-content">
-              {{ config.hackathon }} Submitted
-            </td>
-          </tr>
-          <tr>
-            <td>
-              <a href="{{config.mangoUrl}}">
-                <button class="submit">
-                  Verify
-                </button>
-              </a>
-            </td>
-          </tr>
+        <table class="card" align="center" style="z-index: 100;text-align: center;background-color: #fff;padding: 40px 50px;border-radius: 10px;margin: 20px 0px;">
+          <tbody align="center">
+            {{!-- Header --}}
+            <tr class="card-logo">
+              <td>
+                <img src="{{config.logoPath}}" width="10rem" style="width:10rem;">
+              </td>
+            </tr>
+            <tr style="margin:3">
+              <td>
+                <h2>
+                  Accept your email!
+                </h2>
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <img src="https://cdn-images-1.medium.com/max/1200/1*l0lbQKPIEa-n4mftsS81TQ.gif" class="announcement-image" style="max-width:60%;">
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <h2>
+                  What now?
+                </h2>
+              </td>
+            </tr>
+            {{!-- Body --}}
+            <tr>
+              <td class="card-content" style="padding-top: 0px;padding-bottom: 0px;padding-right: 25px;padding-left: 25px;padding: 0px 25px;">
+                {{ config.hackathonName }} Hey thanks for signing up, please verify your email by hitting that big fat verify button
+              </td>
+            </tr>
+            <tr>
+              <td>
+                <a href="{{config.mangoUrl}}" style="text-decoration:none;color:inherit;">
+                  <button class="submit" style="margin-top: 15px;margin-bottom: 15px;margin-right: 0px;margin-left: 0px;background-color: rgb(136, 208, 238);background-image: none;background-repeat: repeat;background-position: top left;background-attachment: scroll;color: white;font-size: 18px;width: 60%;height: 50px;border-style: none;border-radius: 50px;font-weight: 600;margin: 15px 0px;background: rgb(136, 208, 238);border: none;">
+                    accept
+                  </button>
+                </a>
+              </td>
+            </tr>
+            <tr>
+              <td align="center">
+                <hr style="border: 0.5px solid rgba(0, 0, 0, 0.1); border-radius: 15px;">
+              </td>
+            </tr>
+            {{!-- Footer --}}
+            <tr class="footer">
+              <td>
+                <p>
+                  <span class="light" style="font-weight:300;">Have a question? Reach out at</span>
+                  <a href="mailto:{{config.email}}" style="text-decoration:none;color:inherit;">{{config.email}}</a>
+                </p>
+              </td>
+            </tr>
+            <tr class="social-media" style="display: inline;justify-content: center !important;text-align: center !important;padding-top: 0px;padding-bottom: 0px;padding-right: 150px;padding-left: 150px;padding: 0px 150px;">
+              <td class="facebook" align="center">
+                <a href="{{config.facebookUrl}}" style="text-decoration:none;color:inherit;">
+                  <img src="https://i.imgur.com/CZOS2up.png" height="20px" style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;padding-left: 10px;padding: 10px;">
+                </a>
+              </td>
 
-          {{!-- Footer --}}
-          <tr class="footer">
-            <td>
-              <p>
-                <span class="light">Have a question? Reach out at</span>
-                <a href="mailto:{{config.email}}">{{config.email}}</a>
-              </p>
-            </td>
-          </tr>
-          <tr class="social-media">
-            <td class="facebook" align="center">
-              <a href={{config.facebookUrl}}>
-                <img src="https://i.imgur.com/CZOS2up.png" height="20px">
-              </a>
-            </td>
-
-            <td class="twitter" align="center">
-              <a href={{config.twitterUrl}}>
-                <img src="https://i.imgur.com/4G7Yajp.png" height="20px">
-              </a>
-            </td>
-            <td class="instagram" align="center">
-              <a href={{config.instagramUrl}}>
-                <img src="https://i.imgur.com/3SvBpxh.png" height="20px">
-              </a>
-            </td>
-          </tr>
+              <td class="twitter" align="center">
+                <a href="{{config.twitterUrl}}" style="text-decoration:none;color:inherit;">
+                  <img src="https://i.imgur.com/4G7Yajp.png" height="20px" style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;padding-left: 10px;padding: 10px;">
+                </a>
+              </td>
+              <td class="instagram" align="center">
+                <a href="{{config.instagramUrl}}" style="text-decoration:none;color:inherit;">
+                  <img src="https://i.imgur.com/3SvBpxh.png" height="20px" style="padding-top: 10px;padding-bottom: 10px;padding-right: 10px;padding-left: 10px;padding: 10px;">
+                </a>
+              </td>
+            </tr>
+          </tbody>
         </table>
+      </td>
     </tr>
-    </tr>
+
   </table>
 </body>
 

@@ -40,6 +40,15 @@ This where you set all of your config variables for the email templates. For exa
 
 Another email standard includes adding inline css styles and not have them be separate to the file or even additional as a `<style>` element
 
-To create handlebar files with inline css simply add your css to the file's respective `<style>` block and then use a website like https://inliner.cm/ to convert the html to html with inline css
+To create handlebar files with inline css simply add your css to the file's respective `<style>` block and then use a website like https://templates.mailchimp.com/resources/inline-css/ to convert the html to html with inline css
+
+Disclaimer: Most inline conversion tools can be very finnicky. Your mileage may vary
 
 the file `default.handlebars` contains unchanged html and css templating without adding the inline css. 
+
+
+## Limitations
+
+At the moment, the following limitations exist ... 
+
+ - Gmail doesn't render google fonts correctly. 
