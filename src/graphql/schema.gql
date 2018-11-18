@@ -33,7 +33,7 @@ type Token {
 }
 
 type Mutation {
-  signUp(email: String!, password: String!): String!
+  signUp(email: String!, password: String!): Token!
   logIn(email: String!, password: String!): Token!
   verify(token: String!): Token!
   updateApplication(

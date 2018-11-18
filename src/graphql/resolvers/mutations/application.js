@@ -5,12 +5,9 @@ import applicationService from '../../../services/application';
 
 const updateApplication = async (root, args, context) => {
   try {
-    const { id, level } = context;
+    const { id } = context;
     if (!id) {
       throw new ForbiddenError('User is not logged in.');
-    }
-    if (level !== 'HACKER') {
-      throw new ForbiddenError('User is not a HACKER.');
     }
     const application = await applicationService.updateApplication(id, args);
     return application;
@@ -21,12 +18,9 @@ const updateApplication = async (root, args, context) => {
 
 const submitApplication = async (root, args, context) => {
   try {
-    const { id, level } = context;
+    const { id } = context;
     if (!id) {
       throw new ForbiddenError('User is not logged in.');
-    }
-    if (level !== 'HACKER') {
-      throw new ForbiddenError('User is not a HACKER.');
     }
     const application = await applicationService.updateApplication(id, args);
     await userService.updateStatus(id, 'SUBMITTED');
