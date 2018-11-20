@@ -3,7 +3,7 @@ import userService from '../../../services/user';
 const signUp = async (root, args) => {
   const { email, password } = args;
   try {
-    const token = userService.signUp(email, password);
+    const token = await userService.signUp(email, password);
     return { token };
   } catch (err) {
     throw err;
