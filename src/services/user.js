@@ -9,6 +9,11 @@ import emailService from './email';
 const { SECRET, SALT_ROUNDS } = process.env;
 const saltRounds = parseInt(SALT_ROUNDS);
 
+/**
+ * Updates a users status to a given status.
+ * @param {number} id The id of the user to update.
+ * @param {string} newStatus The status that we are changing the user to.
+ */
 const updateStatus = async (id, newStatus) => {
   try {
     await User.update(
@@ -22,6 +27,11 @@ const updateStatus = async (id, newStatus) => {
   }
 };
 
+/**
+ * Signs up a user with a given email and password.
+ * @param {string} email The user's email.
+ * @param {string} password The user's password.
+ */
 const signUp = async (email, password) => {
   try {
     const user = await User.findOne({ where: { email } });
@@ -49,6 +59,12 @@ const signUp = async (email, password) => {
   }
 };
 
+
+/**
+ * Attempts to log a user in with a given email and password.
+ * @param {string} email The user's email.
+ * @param {string} password The user's password.
+ */
 const logIn = async (email, password) => {
   try {
     const user = await User.findOne({ where: { email } });
@@ -67,6 +83,10 @@ const logIn = async (email, password) => {
   }
 };
 
+/**
+ * Verifies a users email with a given verification JWT.
+ * @param {string} verificationToken The verification token sent via email.
+ */
 const verify = async (verificationToken) => {
   try {
     const { id, verification } = jwt.verify(verificationToken, SECRET);

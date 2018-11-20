@@ -12,6 +12,11 @@ const banana = new Banana({
   },
 });
 
+/**
+ * Sends a verification email to a given email with a given verification token.
+ * @param {string} email The email to send verification to.
+ * @param {string} token The verification token to send.
+ */
 const sendVerification = async (email, token) => {
   const message = {
     to: email,
@@ -29,6 +34,12 @@ const sendVerification = async (email, token) => {
   }
 };
 
+/**
+ * Sends a decision to a list of given hackers.
+ * @param {Array<Object>} hackers An array of hacker objects containing email, firstName,
+ * and lastName.
+ * @param {string} decision The decision to send to the given hackers.
+ */
 const sendDecisions = async (hackers, decision) => {
   const messages = hackers.map((hacker) => {
     const { email, firstName, lastName } = hacker;

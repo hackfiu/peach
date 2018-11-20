@@ -1,6 +1,11 @@
 import { ForbiddenError } from 'apollo-server-express';
 import { Application, User } from '../models';
 
+/**
+ * Updates the given user's application with the given arguments.
+ * @param {number} userId The user's ID.
+ * @param {Object} args The arguments with which to update the application.
+ */
 const update = async (userId, args) => {
   try {
     if (!userId) {
