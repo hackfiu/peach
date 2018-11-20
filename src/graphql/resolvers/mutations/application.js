@@ -1,15 +1,10 @@
-import { ForbiddenError } from 'apollo-server-express';
-
 import userService from '../../../services/user';
 import applicationService from '../../../services/application';
 
 const updateApplication = async (root, args, context) => {
   try {
     const { id } = context;
-    if (!id) {
-      throw new ForbiddenError('User is not logged in.');
-    }
-    const application = await applicationService.updateApplication(id, args);
+    const application = await applicationService.update(id, args);
     return application;
   } catch (err) {
     throw err;
@@ -19,9 +14,6 @@ const updateApplication = async (root, args, context) => {
 const submitApplication = async (root, args, context) => {
   try {
     const { id } = context;
-    if (!id) {
-      throw new ForbiddenError('User is not logged in.');
-    }
     const application = await applicationService.updateApplication(id, args);
     await userService.updateStatus(id, 'SUBMITTED');
     return application;

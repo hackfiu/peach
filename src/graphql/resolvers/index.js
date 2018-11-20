@@ -1,11 +1,11 @@
 import { signUp, logIn, verify } from './mutations/user';
 import { updateApplication, submitApplication } from './mutations/application';
 
-const info = () => 'This is a GraphQL Server';
+import user from './queries/user';
 
 const resolvers = {
   Query: {
-    info,
+    user,
   },
   Mutation: {
     signUp,
