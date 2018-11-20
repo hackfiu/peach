@@ -10,6 +10,7 @@
     "backpack-core": "^0.7.0",
     "banana-mail": "^1.0.0",
     "bcrypt": "^3.0.2",
+    "bluebird": "^3.5.3",
     "dotenv": "^6.1.0",
     "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
@@ -17,13 +18,16 @@
     "graphql": "^14.0.2",
     "jsonwebtoken": "^8.3.0",
     "pg": "^7.6.0",
-    "sequelize": "^4.41.0"
+    "sequelize": "^4.41.0",
+    "sqlite3": "^4.0.4",
+    "umzug": "^2.1.0"
   },
   "scripts": {
     "deploy": "now --public && now alias",
     "start": "node ./build/main.js",
     "build": "backpack build",
-    "dev": "backpack dev"
+    "dev": "backpack dev",
+    "migrate": "node migrate.js"
   },
   "devDependencies": {
     "eslint": "^5.8.0",

@@ -1,17 +1,21 @@
-import dotenv from 'dotenv';
 import { Sequelize } from 'sequelize';
 
-dotenv.config();
-const {
-  DB_NAME, DB_HOST, DB_USER, DB_PASSWORD, STAGE,
-} = process.env;
+const config = require('./config');
 
-const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-  host: DB_HOST,
+const { STAGE = 'DEV' } = process.env;
+
+const {
+  database, storage, dialect, host, logging, username, password,
+} = config;
+
+const sequelize = new Sequelize(database, username, password, {
+  host,
+  storage,
+  dialect,
+  logging,
   dialectOptions: {
     ssl: STAGE === 'PROD',
   },
-  dialect: 'postgres',
   operatorsAliases: false,
 });
 
