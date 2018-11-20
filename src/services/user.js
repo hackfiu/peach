@@ -43,7 +43,7 @@ const signUp = async (email, password) => {
     const verificationToken = jwt.sign({ id, verification: true }, SECRET);
     emailService.sendVerification(email, verificationToken);
     const loginToken = jwt.sign({ id, level }, SECRET);
-    return { loginToken };
+    return loginToken;
   } catch (err) {
     throw err;
   }
