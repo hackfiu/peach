@@ -1,9 +1,11 @@
 import { ForbiddenError } from 'apollo-server-express';
 import { Application, User } from '../models';
 
-
-const updateApplication = async (userId, args) => {
+const update = async (userId, args) => {
   try {
+    if (!userId) {
+      throw new ForbiddenError('User is not logged in.');
+    }
     const { status, level } = await User.findByPk(userId);
     if (level !== 'HACKER') {
       throw new ForbiddenError('User is not a HACKER.');
@@ -27,4 +29,4 @@ const updateApplication = async (userId, args) => {
   }
 };
 
-export default { updateApplication };
+export default { update };
