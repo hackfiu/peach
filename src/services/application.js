@@ -1,5 +1,5 @@
 import { ForbiddenError } from 'apollo-server-express';
-import { Application, User } from '../models';
+import User from '../models';
 
 /**
  * Updates the given user's application with the given arguments.
@@ -11,7 +11,7 @@ const update = async (userId, args) => {
     if (!userId) {
       throw new ForbiddenError('User is not logged in.');
     }
-    const { status, level } = await User.findByPk(userId);
+    const { status, level } = await User.findById(userId);
     if (level !== 'HACKER') {
       throw new ForbiddenError('User is not a HACKER.');
     }
@@ -19,15 +19,25 @@ const update = async (userId, args) => {
       throw new ForbiddenError('User has already submitted an application.');
     }
     const {
-      firstName, lastName, levelOfStudy, major, shirtSize, gender,
+      firstName,
+      lastName,
+      levelOfStudy,
+      major,
+      shirtSize,
+      gender,
     } = args;
-    await Application.update({
-      firstName, lastName, levelOfStudy, major, shirtSize, gender,
-    },
-    {
-      where: { userId },
-    });
-    const application = Application.findOne({ where: { userId } });
+
+    const options = {
+      firstName,
+      lastName,
+      levelOfStudy,
+      major,
+      shirtSize,
+      gender,
+    };
+
+    const user = await User.findByIdAndUpdate(userId, { application: options });
+    const { application } = user;
     return application;
   } catch (err) {
     throw err;
