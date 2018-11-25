@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+// fixing bugs from old mongo with this fix as referred to this github issue: https://github.com/Automattic/mongoose/issues/7108
+mongoose.set('useFindAndModify', false);
+
 const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,
 } = process.env;
@@ -22,26 +25,3 @@ const db = () => Promise.resolve(
 db()
   .then(() => console.log('> DB Connected'))
   .catch(e => console.log(e.message));
-// import dotenv from 'dotenv';
-// import { Sequelize } from 'sequelize';
-
-// dotenv.config();
-// const {
-//   DB_NAME, DB_HOST, DB_USER, DB_PASSWORD, STAGE,
-// } = process.env;
-
-// const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASSWORD, {
-//   host: DB_HOST,
-//   dialectOptions: {
-//     ssl: STAGE === 'PROD',
-//   },
-//   dialect: 'postgres',
-//   operatorsAliases: false,
-// });
-
-// sequelize
-//   .authenticate()
-//   .then(console.log('Connection has been established successfully.'))
-//   .catch(err => console.error('Unable to connect to the database:', err));
-
-// export { sequelize, Sequelize };

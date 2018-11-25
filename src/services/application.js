@@ -6,7 +6,7 @@ import User from '../models';
  * @param {number} userId The user's ID.
  * @param {Object} args The arguments with which to update the application.
  */
-const update = async (userId, args) => {
+const update = async (userId, options) => {
   try {
     if (!userId) {
       throw new ForbiddenError('User is not logged in.');
@@ -18,25 +18,8 @@ const update = async (userId, args) => {
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
-    const {
-      firstName,
-      lastName,
-      levelOfStudy,
-      major,
-      shirtSize,
-      gender,
-    } = args;
 
-    const options = {
-      firstName,
-      lastName,
-      levelOfStudy,
-      major,
-      shirtSize,
-      gender,
-    };
-
-    const user = await User.findByIdAndUpdate(userId, { application: options });
+    const user = await User.findByIdAndUpdate(userId, { application: options }, { new: true });
     const { application } = user;
     return application;
   } catch (err) {
