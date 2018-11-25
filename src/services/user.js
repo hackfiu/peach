@@ -45,7 +45,6 @@ const signUp = async (email, password) => {
     );
     const { id, level } = newUser;
     const verificationToken = jwt.sign({ id, verification: true }, SECRET);
-    console.log(verificationToken);
     emailService.sendVerification(email, verificationToken);
     const loginToken = jwt.sign({ id, level }, SECRET);
     return loginToken;
@@ -63,7 +62,6 @@ const signUp = async (email, password) => {
 const logIn = async (email, password) => {
   try {
     const user = await User.findOne({ email });
-    console.log(user);
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!user || !correctPassword) {
       throw new AuthenticationError('Incorrect login');

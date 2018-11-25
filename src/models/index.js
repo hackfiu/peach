@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import ApplicationSchema from './application';
-import UserDocument from './user';
+import UserSchema from './user';
 
 const Application = ApplicationSchema(mongoose);
-const User = UserDocument(mongoose, Application);
+const User = UserSchema(mongoose, Application);
 
 export default User;

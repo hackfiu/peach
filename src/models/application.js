@@ -1,4 +1,4 @@
-const ApplicationDocument = Mongoose => new Mongoose.Schema({
+const ApplicationSchema = Mongoose => new Mongoose.Schema({
   firstName: String,
   lastName: String,
   levelOfStudy: String,
@@ -7,4 +7,4 @@ const ApplicationDocument = Mongoose => new Mongoose.Schema({
   gender: String,
 });
 
-export default ApplicationDocument;
+export default ApplicationSchema;

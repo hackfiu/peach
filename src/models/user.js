@@ -1,4 +1,4 @@
-const UserDocument = (Mongoose, application) => Mongoose.model('users', new Mongoose.Schema({
+const UserSchema = (Mongoose, application) => Mongoose.model('users', new Mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   level: { type: String, required: true },
@@ -6,4 +6,4 @@ const UserDocument = (Mongoose, application) => Mongoose.model('users', new Mong
   application,
 }));
 
-export default UserDocument;
+export default UserSchema;
