@@ -1,14 +1,8 @@
-import { sequelize, Sequelize } from '../database';
+import mongoose from 'mongoose';
+import ApplicationSchema from './application';
+import UserSchema from './user';
 
-import ApplicationModel from './application';
-import UserModel from './user';
+const Application = ApplicationSchema(mongoose);
+const User = UserSchema(mongoose, Application);
 
-const Application = ApplicationModel(sequelize, Sequelize);
-const User = UserModel(sequelize, Sequelize);
-
-const initSequelize = () => {
-  User.hasOne(Application, { foreignKey: { allowNull: true }, onDelete: 'CASCADE' });
-  sequelize.sync();
-};
-
-export { Application, User, initSequelize };
+export default User;

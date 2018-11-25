@@ -14,7 +14,7 @@ const updateApplication = async (root, args, context) => {
 const submitApplication = async (root, args, context) => {
   try {
     const { id } = context;
-    const application = await applicationService.updateApplication(id, args);
+    const application = await applicationService.update(id, args);
     await userService.updateStatus(id, 'SUBMITTED');
     return application;
   } catch (err) {

@@ -1,5 +1,5 @@
 import { AuthenticationError } from 'apollo-server-express';
-import { User } from '../../../models';
+import User from '../../../models';
 
 const user = async (root, args, context) => {
   try {

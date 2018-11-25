@@ -2,7 +2,7 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { AuthenticationError, ForbiddenError } from 'apollo-server-express';
 
-import { User, Application } from '../models';
+import User from '../models';
 
 import emailService from './email';
 
@@ -12,15 +12,11 @@ const saltRounds = parseInt(SALT_ROUNDS);
 /**
  * Updates a users status to a given status.
  * @param {number} id The id of the user to update.
- * @param {string} newStatus The status that we are changing the user to.
+ * @param {string} status The status that we are changing the user to.
  */
-const updateStatus = async (id, newStatus) => {
+const updateStatus = async (id, status) => {
   try {
-    await User.update(
-      { status: newStatus },
-      { where: { id } },
-    );
-    const user = await User.findByPk(id);
+    const user = await User.findByIdAndUpdate(id, { status });
     return user;
   } catch (err) {
     throw err;
@@ -34,7 +30,7 @@ const updateStatus = async (id, newStatus) => {
  */
 const signUp = async (email, password) => {
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ email });
     if (user) {
       throw new AuthenticationError(`Email ${email} already exists.`);
     }
@@ -45,9 +41,7 @@ const signUp = async (email, password) => {
         password: hashed,
         status: 'UNVERIFIED',
         level: 'HACKER',
-        application: {},
       },
-      { include: [Application] },
     );
     const { id, level } = newUser;
     const verificationToken = jwt.sign({ id, verification: true }, SECRET);
@@ -67,7 +61,7 @@ const signUp = async (email, password) => {
  */
 const logIn = async (email, password) => {
   try {
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({ email });
     const correctPassword = await bcrypt.compare(password, user.password);
     if (!user || !correctPassword) {
       throw new AuthenticationError('Incorrect login');
