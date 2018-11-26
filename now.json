@@ -25,5 +25,4 @@
   "builds": [
     { "src": "build/main.js", "use": "@now/node" }
   ]
-
 }
