@@ -3,7 +3,7 @@ const config = {
   hackathonName: 'Floatie',
   logoPath: 'https://floatie.floridahackers.com/assets/img/floatie.png',
   email: 'hypefiu@gmail.com',
-  mangoUrl: 'https://mango.hackfiu.com',
+  mangoUrl: 'https://mangohype.netlify.com',
   facebookUrl: 'https://www.facebook.com/floridahackers',
   twitterUrl: 'https://www.twitter.com/floridahackers',
   instagramUrl: '"https://www.instagram.com/floridahackers"',
