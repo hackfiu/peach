@@ -1,7 +1,7 @@
 {
   "type": "npm",
   "name": "peach",
-  "alias": "peach",
+  "alias": "peach.hackfiu",
   "version":1,
   "features": {
     "cloud": "v1"
