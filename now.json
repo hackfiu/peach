@@ -23,7 +23,7 @@
     "SERVER_URL": "@server_url"
   },
   "builds": [
-    { "src": "build/main.js", "use": "@now/node-server" }
+    { "src": "build/main.js", "use": "@now/node" }
   ]
 
 }
