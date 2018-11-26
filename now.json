@@ -2,7 +2,6 @@
   "type": "npm",
   "name": "peach",
   "alias": "peach",
-  
   "scale": {
     "sfo1": {
       "min": 1,
