@@ -21,5 +21,9 @@
     "SALT_ROUNDS": "@salt_rounds",
     "STAGE": "@stage",
     "SERVER_URL": "@server_url"
-  }
+  },
+  "builds": [
+    { "src": "build/main.js", "use": "@now/node-server" }
+  ]
+
 }
