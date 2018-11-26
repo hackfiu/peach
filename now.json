@@ -2,11 +2,24 @@
   "type": "npm",
   "name": "peach",
   "alias": "peach",
-  "dotenv": true,
   "scale": {
     "sfo1": {
       "min": 1,
       "max": "auto"
     }
+  },
+  "env": {
+    "DB_HOST": "@db_host",
+    "DB_NAME": "@db_name",
+    "DB_USER": "@db_user",
+    "DB_PASSWORD": "@db_password",
+    "SECRET": "@secret",
+    "PORT": "@port",
+    "BANANA_SERVICE": "@banana_service",
+    "BANANA_EMAIL": "@banana_email",
+    "BANANA_PASS": "@banana_pass",
+    "SALT_ROUNDS": "@salt_rounds",
+    "STAGE": "@stage",
+    "SERVER_URL": "@server_url"
   }
 }
