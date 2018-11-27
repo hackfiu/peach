@@ -7,7 +7,7 @@ const user = async (root, args, context) => {
     if (level !== 'ADMIN' && id.toString() !== args.id) {
       throw new AuthenticationError('Not allowed to fetch this user');
     }
-    const requestedUser = await User.findByPk(args.id);
+    const requestedUser = await User.findById(args.id);
     return requestedUser;
   } catch (err) {
     throw err;
