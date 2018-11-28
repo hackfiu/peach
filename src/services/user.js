@@ -16,7 +16,7 @@ const saltRounds = parseInt(SALT_ROUNDS);
  */
 const updateStatus = async (id, status) => {
   try {
-    const user = await User.findByIdAndUpdate(id, { status });
+    const user = await User.findByIdAndUpdate(id, { status }, { new: true });
     return user;
   } catch (err) {
     throw err;
