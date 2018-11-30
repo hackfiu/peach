@@ -35,12 +35,6 @@ type Token {
   token: String!
 }
 
-type File {
-  fileName: String
-  mimeType: String
-  encoding: String
-}
-
 type Mutation {
   signUp(email: String!, password: String!): Token!
   logIn(email: String!, password: String!): Token!

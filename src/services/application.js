@@ -18,9 +18,17 @@ const update = async (userId, options) => {
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
-    const { resume } = options;
-    const { filename, mimetype, createReadStream } = await resume;
-    const user = await User.findByIdAndUpdate(userId, { application: options }, { new: true });
+    const {
+      firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
+    } = options;
+
+    const { filename: name, mimetype, createReadStream } = await resume;
+    // upload({name, mimetype, createReadStream});
+    const user = await User.findByIdAndUpdate(userId, {
+      application: {
+        firstName, lastName, levelOfStudy, gender, major, shirtSize,
+      },
+    }, { new: true });
     const { application } = user;
     return application;
   } catch (err) {
