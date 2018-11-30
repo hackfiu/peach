@@ -1,0 +1,48 @@
+import { google } from 'googleapis';
+
+const { GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_FOLDER_ID } = process.env;
+
+const client = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, ['https://www.googleapis.com/auth/drive']);
+
+client.authorize()
+  .then(() => console.log(`> Connected to Google Drive on ${client_email}`))
+  .catch((err) => console.error(err))
+
+const drive = google.drive('v3');
+
+/**
+ * Creates a file in Google Drive.
+ * @param {Object} file The file to be uploaded to drive, that is, an object containing the resource, media, returning field.
+ */
+const createFile = (file) => (
+  new Promise((resolve, reject) => {
+    drive.files.create(params, (err, { id }) => {
+      if (err) {
+        reject(err);
+      }
+      resolve(id);
+    })
+  })
+)
+
+/**
+ * Uploads a given file to Google Drive.
+ * @param {Object} file The file to be uploaded, containing a { name, mimeType, stream } object.
+ * @param {string} file.name The name of the file.
+ * @param {string} file.mimeType The mimetype of the file.
+ * @param {*} file.createReadStream The function to create a stream
+ */
+const upload = (file) => {
+  const { name, mimeType, createReadStream } = file;
+  const resource = { name, mimeType };
+  const media = { mimeType, body: createReadStream() }
+  const parents = [GOOGLE_FOLDER_ID]
+  try {
+    const id = await createFile({ resource, media, fields: 'id', parents });
+    return id;
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export default { upload }
