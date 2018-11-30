@@ -1,3 +1,5 @@
+scalar Upload
+
 type User {
   id: ID!
   email: String!
@@ -20,6 +22,7 @@ type Application {
   major: String
   shirtSize: ShirtSize
   gender: Gender
+  resume: String
 }
 
 type Query {
@@ -42,7 +45,8 @@ type Mutation {
     levelOfStudy: LevelOfStudy
     major: String
     shirtSize: ShirtSize
-    gender: Gender
+    gender: Gender,
+    resume: Upload
   ): Application!
   submitApplication(
     firstName: String!
@@ -51,6 +55,7 @@ type Mutation {
     major: String!
     shirtSize: ShirtSize!
     gender: Gender!
+    resume: Upload!
   ): Application!
 }
 

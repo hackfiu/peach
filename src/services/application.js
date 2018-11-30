@@ -6,7 +6,7 @@ import User from '../models';
  * @param {number} userId The user's ID.
  * @param {Object} args The arguments with which to update the application.
  */
-const update = async (userId, options) => {
+const update = async (userId, args) => {
   try {
     if (!userId) {
       throw new ForbiddenError('User is not logged in.');
@@ -18,8 +18,18 @@ const update = async (userId, options) => {
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
+    const {
+      firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
+    } = args;
 
-    const user = await User.findByIdAndUpdate(userId, { application: options }, { new: true });
+    const { filename: name, mimetype, createReadStream } = await resume;
+    const body = createReadStream();
+    // upload({name, mimetype, body});
+    const user = await User.findByIdAndUpdate(userId, {
+      application: {
+        firstName, lastName, levelOfStudy, gender, major, shirtSize,
+      },
+    }, { new: true });
     const { application } = user;
     return application;
   } catch (err) {

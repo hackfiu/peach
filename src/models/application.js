@@ -5,6 +5,7 @@ const ApplicationSchema = Mongoose => new Mongoose.Schema({
   major: String,
   shirtSize: String,
   gender: String,
+  resume: String,
 });
 
 export default ApplicationSchema;
