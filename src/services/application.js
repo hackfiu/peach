@@ -1,5 +1,8 @@
 import { ForbiddenError } from 'apollo-server-express';
+
 import User from '../models';
+import Drive from './drive';
+
 
 /**
  * Updates the given user's application with the given arguments.
@@ -24,7 +27,8 @@ const update = async (userId, args) => {
 
     const { filename: name, mimetype, createReadStream } = await resume;
     const body = createReadStream();
-    // upload({name, mimetype, body});
+    const id = Drive.upload({ name, mimetype, body });
+    console.log(id);
     const user = await User.findByIdAndUpdate(userId, {
       application: {
         firstName, lastName, levelOfStudy, gender, major, shirtSize,
