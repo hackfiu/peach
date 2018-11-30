@@ -11,22 +11,6 @@ client.authorize()
 const drive = google.drive('v3');
 
 /**
- * Creates a file in Google Drive.
- * @param {Object} params The parameters of the file to be uploaded to drive, that is,
- * an object containing the resource, media, returning field.
- */
-const createFile = params => (
-  new Promise((resolve, reject) => {
-    drive.files.create(params, (err, { id }) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(id);
-    });
-  })
-);
-
-/**
  * Uploads a given file to Google Drive.
  * @param {Object} file The file to be uploaded.
  * @param {string} file.name The name of the file.
@@ -39,10 +23,8 @@ const upload = async (file) => {
   const media = { mimeType, body };
   const parents = [GOOGLE_FOLDER_ID];
   try {
-    const id = await createFile({
-      resource, media, fields: 'id', parents,
-    });
-    return id;
+    const { webViewLink } = await drive.files.create({ resource, media, parents });
+    return webViewLink;
   } catch (err) {
     throw err;
   }
