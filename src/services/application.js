@@ -18,7 +18,8 @@ const update = async (userId, options) => {
     if (status !== 'VERIFIED') {
       throw new ForbiddenError('User has already submitted an application.');
     }
-
+    const { resume } = options;
+    const { filename, mimetype, createReadStream } = await resume;
     const user = await User.findByIdAndUpdate(userId, { application: options }, { new: true });
     const { application } = user;
     return application;
