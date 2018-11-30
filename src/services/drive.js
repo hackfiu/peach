@@ -6,7 +6,7 @@ const client = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY
 
 client.authorize()
   .then(() => console.log(`> Connected to Google Drive on ${client_email}`))
-  .catch((err) => console.error(err))
+  .catch((err) => console.error(err));
 
 const drive = google.drive('v3');
 
@@ -27,16 +27,16 @@ const createFile = (file) => (
 
 /**
  * Uploads a given file to Google Drive.
- * @param {Object} file The file to be uploaded, containing a { name, mimeType, stream } object.
+ * @param {Object} file The file to be uploaded.
  * @param {string} file.name The name of the file.
  * @param {string} file.mimeType The mimetype of the file.
- * @param {*} file.createReadStream The function to create a stream
+ * @param {*} file.body The readStream body.
  */
 const upload = (file) => {
-  const { name, mimeType, createReadStream } = file;
+  const { name, mimeType, body } = file;
   const resource = { name, mimeType };
-  const media = { mimeType, body: createReadStream() }
-  const parents = [GOOGLE_FOLDER_ID]
+  const media = { mimeType, body };
+  const parents = [GOOGLE_FOLDER_ID];
   try {
     const id = await createFile({ resource, media, fields: 'id', parents });
     return id;
