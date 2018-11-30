@@ -6,7 +6,7 @@ import User from '../models';
  * @param {number} userId The user's ID.
  * @param {Object} args The arguments with which to update the application.
  */
-const update = async (userId, options) => {
+const update = async (userId, args) => {
   try {
     if (!userId) {
       throw new ForbiddenError('User is not logged in.');
@@ -20,10 +20,11 @@ const update = async (userId, options) => {
     }
     const {
       firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
-    } = options;
+    } = args;
 
     const { filename: name, mimetype, createReadStream } = await resume;
-    // upload({name, mimetype, createReadStream});
+    const body = createReadStream();
+    // upload({name, mimetype, body});
     const user = await User.findByIdAndUpdate(userId, {
       application: {
         firstName, lastName, levelOfStudy, gender, major, shirtSize,
