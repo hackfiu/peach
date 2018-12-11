@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+
 import ApplicationSchema from './application';
 import UserSchema from './user';
 

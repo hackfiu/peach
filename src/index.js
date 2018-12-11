@@ -1,36 +1,21 @@
 import './env';
-
-import express from 'express';
-import jwt from 'express-jwt';
-import { ApolloServer } from 'apollo-server-express';
-import { graphqlUploadExpress } from 'graphql-upload';
-
-import typeDefs from './graphql/schema.gql';
-import resolvers from './graphql/resolvers';
 import './database';
 
-const { PORT, SECRET, SERVER_URL } = process.env;
+import express from 'express';
+import expressJWT from 'express-jwt';
+import { graphqlUploadExpress } from 'graphql-upload';
 
-const app = express()
-  .use('/graphql', graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 100 }));
+import apollo from './graphql/apollo';
 
-const server = new ApolloServer({
-  typeDefs,
-  resolvers,
-  formatError(err) {
-    console.error(err);
-    const { message, extensions: { code } } = err;
-    return { message, extensions: { code } };
-  },
-  context(ctx) {
-    const { req } = ctx;
-    return req.user;
-  },
-  uploads: false,
-});
+const {
+  PORT, SECRET, SERVER_URL, MAX_FILE_SIZE, MAX_FILES,
+} = process.env;
 
-app.use(jwt({ secret: SECRET, credentialsRequired: false }));
+const app = express();
 
-server.applyMiddleware({ app });
+app.use('/graphql', graphqlUploadExpress({ maxFileSize: MAX_FILE_SIZE, maxFiles: MAX_FILES }));
+app.use(expressJWT({ secret: SECRET, credentialsRequired: false }));
 
-app.listen({ port: PORT }, () => console.log(`🍑  Server up on ${SERVER_URL}:${PORT}${server.graphqlPath}`));
+apollo.applyMiddleware({ app });
+
+app.listen({ port: PORT }, () => console.log(`🍑  Server up on ${SERVER_URL}:${PORT}${apollo.graphqlPath}`));
