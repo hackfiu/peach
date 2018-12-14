@@ -25,10 +25,11 @@ const update = async (userId, args) => {
       firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
     } = args;
 
-    const { filename: name, mimetype, createReadStream } = await resume;
-    const body = createReadStream();
-    const id = Drive.upload({ name, mimetype, body });
-    console.log(id);
+    const { filename: name, mimetype: mimeType, createReadStream } = await resume;
+    const body = createReadStream(name);
+    console.log(body);
+    const link = Drive.upload({ name, mimeType, body });
+    console.log(await link);
     const user = await User.findByIdAndUpdate(userId, {
       application: {
         firstName, lastName, levelOfStudy, gender, major, shirtSize,
