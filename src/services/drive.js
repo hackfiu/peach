@@ -2,11 +2,7 @@ import { google } from 'googleapis';
 
 const { GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_FOLDER_ID } = process.env;
 
-const client = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, ['https://www.googleapis.com/auth/drive']);
-
-client.authorize()
-  .then(() => console.log(`> Connected to Google Drive on ${GOOGLE_CLIENT_EMAIL}`))
-  .catch(err => console.error(err));
+const auth = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, ['https://www.googleapis.com/auth/drive']);
 
 const drive = google.drive('v3');
 
@@ -23,7 +19,10 @@ const upload = async (file) => {
   const media = { mimeType, body };
   const parents = [GOOGLE_FOLDER_ID];
   try {
-    const { webViewLink } = await drive.files.create({ resource, media, parents });
+    await auth.authorize();
+    const { webViewLink } = await drive.files.create({
+      auth, resource, media, parents,
+    });
     return webViewLink;
   } catch (err) {
     throw err;

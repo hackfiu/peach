@@ -7,6 +7,8 @@ const {
   DB_USER, DB_PASSWORD, DB_HOST, DB_NAME,
 } = process.env;
 
+const mongoURL = `${DB_HOST}/${DB_NAME}`;
+
 const options = {
   user: DB_USER,
   pass: DB_PASSWORD,
@@ -14,14 +16,12 @@ const options = {
   useCreateIndex: true,
 };
 
-const db = () => Promise.resolve(
-  mongoose.connect(
-    `${DB_HOST}/${DB_NAME}`,
-    options,
-  ),
+const initMongoose = async () => mongoose.connect(
+  mongoURL,
+  options,
 );
 
 
-db()
-  .then(() => console.log('> DB Connected'))
-  .catch(e => console.log(e.message));
+initMongoose()
+  .then(() => console.log(`> Connected to Mongo instance at ${mongoURL}`))
+  .catch(err => console.error('Error connecting to Mongo instance:', err));
