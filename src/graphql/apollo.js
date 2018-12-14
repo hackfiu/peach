@@ -3,10 +3,9 @@ import { ApolloServer } from 'apollo-server-express';
 import typeDefs from './schema.gql';
 import resolvers from './resolvers';
 
-const server = new ApolloServer({
+const apollo = new ApolloServer({
   typeDefs,
   resolvers,
-  uploads: false,
   formatError(err) {
     console.error(err);
     const { message, extensions: { code } } = err;
@@ -18,4 +17,4 @@ const server = new ApolloServer({
   },
 });
 
-export default server;
+export default apollo;

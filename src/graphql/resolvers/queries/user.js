@@ -1,13 +1,9 @@
-import { AuthenticationError } from 'apollo-server-express';
-import User from '../../../models';
+import userService from '../../../services/user';
 
 const user = async (root, args, context) => {
   try {
     const { id, level } = context;
-    if (level !== 'ADMIN' && id.toString() !== args.id) {
-      throw new AuthenticationError('Not allowed to fetch this user');
-    }
-    const requestedUser = await User.findById(args.id);
+    const requestedUser = await userService.find(id, level, args.id);
     return requestedUser;
   } catch (err) {
     throw err;

@@ -2,7 +2,10 @@ import { google } from 'googleapis';
 
 const { GOOGLE_CLIENT_EMAIL, GOOGLE_PRIVATE_KEY, GOOGLE_FOLDER_ID } = process.env;
 
-const auth = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, ['https://www.googleapis.com/auth/drive']);
+const driveScope = 'https://www.googleapis.com/auth/drive';
+const createFieldSelector = 'webViewLink';
+
+const auth = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, [driveScope]);
 
 const drive = google.drive('v3');
 
@@ -15,13 +18,12 @@ const drive = google.drive('v3');
  */
 const upload = async (file) => {
   const { name, mimeType, body } = file;
-  const resource = { name, mimeType };
   const media = { mimeType, body };
   const parents = [GOOGLE_FOLDER_ID];
   try {
     await auth.authorize();
-    const { webViewLink } = await drive.files.create({
-      auth, resource, media, parents,
+    const { data: { webViewLink } } = await drive.files.create({
+      auth, media, requestBody: { name, parents }, fields: createFieldSelector,
     });
     return webViewLink;
   } catch (err) {

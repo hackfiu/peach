@@ -1,5 +1,3 @@
-scalar Upload
-
 type User {
   id: ID!
   email: String!
@@ -14,6 +12,11 @@ type Team {
   members: [User!]
 }
 
+type File {
+  name: String!
+  path: String!
+}
+
 type Application {
   id: ID!
   firstName: String
@@ -22,7 +25,7 @@ type Application {
   major: String
   shirtSize: ShirtSize
   gender: Gender
-  resume: String
+  resume: File
 }
 
 type Query {
