@@ -48,7 +48,7 @@ type Mutation {
     levelOfStudy: LevelOfStudy
     major: String
     shirtSize: ShirtSize
-    gender: Gender,
+    gender: Gender
     resume: Upload
   ): Application!
   submitApplication(
@@ -92,6 +92,8 @@ enum LevelOfStudy {
   JUNIOR
   SENIOR
   SENIORPLUS
+  GRADUATE
+  OTHER
 }
 
 enum Gender {

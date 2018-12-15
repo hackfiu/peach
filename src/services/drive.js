@@ -12,18 +12,18 @@ const drive = google.drive('v3');
 /**
  * Uploads a given file to Google Drive.
  * @param {Object} file The file to be uploaded.
- * @param {string} file.name The name of the file.
- * @param {string} file.mimeType The mimetype of the file.
- * @param {*} file.body The readStream body.
+ * @param {string} file.filename The name of the file.
+ * @param {string} file.mimetype The mimetype of the file.
+ * @param {ReadStream} file.stream The readStream body.
  */
 const upload = async (file) => {
-  const { name, mimeType, body } = file;
-  const media = { mimeType, body };
+  const { filename, mimetype, stream } = file;
+  const media = { mimeType: mimetype, body: stream };
   const parents = [GOOGLE_FOLDER_ID];
   try {
     await auth.authorize();
     const { data: { webViewLink } } = await drive.files.create({
-      auth, media, requestBody: { name, parents }, fields: createFieldSelector,
+      auth, media, requestBody: { name: filename, parents }, fields: createFieldSelector,
     });
     return webViewLink;
   } catch (err) {
