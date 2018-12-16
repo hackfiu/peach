@@ -5,6 +5,7 @@ const ApplicationSchema = (mongoose, Resume) => new mongoose.Schema({
   major: String,
   shirtSize: String,
   gender: String,
+  school: String,
   resume: Resume,
 });
 

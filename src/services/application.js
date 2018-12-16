@@ -24,19 +24,27 @@ const update = async (userId, args) => {
     }
 
     const {
-      firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
+      firstName, lastName, levelOfStudy, gender, major, shirtSize, resume, school,
     } = args;
-    console.log({ args });
+
     let path;
     let name;
     if (resume) {
-      const { filename, mimetype, stream } = await resume;
+      const { filename, mimetype, createReadStream } = await resume;
+      const stream = createReadStream();
       name = filename;
       path = await driveService.upload({ filename: email, mimetype, stream });
     }
     const user = await User.findByIdAndUpdate(userId, {
       application: {
-        firstName, lastName, levelOfStudy, gender, major, shirtSize, resume: { name, path },
+        firstName,
+        lastName,
+        levelOfStudy,
+        gender,
+        major,
+        shirtSize,
+        school,
+        resume: path ? { name, path } : null,
       },
     }, { new: true });
     const { application } = user;

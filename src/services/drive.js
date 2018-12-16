@@ -9,6 +9,22 @@ const auth = new google.auth.JWT(GOOGLE_CLIENT_EMAIL, null, GOOGLE_PRIVATE_KEY, 
 
 const drive = google.drive('v3');
 
+
+/**
+ * Deletes files having the given fields.
+ * @param {Object} params
+ */
+const deleteFiles = async (params) => {
+  const { filename } = params;
+  try {
+    await auth.authorize();
+    const ids = drive.files.list({ auth, q: `name = ${filename}` });
+    console.log(ids);
+  } catch (err) {
+    throw err;
+  }
+};
+
 /**
  * Uploads a given file to Google Drive.
  * @param {Object} file The file to be uploaded.
@@ -22,6 +38,7 @@ const upload = async (file) => {
   const parents = [GOOGLE_FOLDER_ID];
   try {
     await auth.authorize();
+    await deleteFiles({ filename });
     const { data: { webViewLink } } = await drive.files.create({
       auth, media, requestBody: { name: filename, parents }, fields: createFieldSelector,
     });
