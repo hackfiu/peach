@@ -26,6 +26,7 @@ const update = async (userId, args) => {
     const {
       firstName, lastName, levelOfStudy, gender, major, shirtSize, resume,
     } = args;
+    console.log({ args });
     let path;
     let name;
     if (resume) {
