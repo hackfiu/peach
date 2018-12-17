@@ -12,14 +12,21 @@ type Team {
   members: [User!]
 }
 
+type File {
+  name: String!
+  path: String!
+}
+
 type Application {
   id: ID!
   firstName: String
   lastName: String
   levelOfStudy: LevelOfStudy
+  school: String
   major: String
   shirtSize: ShirtSize
   gender: Gender
+  resume: File
 }
 
 type Query {
@@ -40,17 +47,21 @@ type Mutation {
     firstName: String
     lastName: String
     levelOfStudy: LevelOfStudy
+    school: String
     major: String
     shirtSize: ShirtSize
     gender: Gender
+    resume: Upload
   ): Application!
   submitApplication(
     firstName: String!
     lastName: String!
     levelOfStudy: LevelOfStudy!
+    school: String!
     major: String!
     shirtSize: ShirtSize!
     gender: Gender!
+    resume: Upload
   ): Application!
 }
 
@@ -84,6 +95,8 @@ enum LevelOfStudy {
   JUNIOR
   SENIOR
   SENIORPLUS
+  GRADUATE
+  OTHER
 }
 
 enum Gender {

@@ -5,15 +5,15 @@
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
-    "apollo-server-express": "^2.1.0",
+    "apollo-server-express": "^2.3.1",
     "axios": "^0.18.0",
-    "backpack-core": "^0.7.0",
+    "backpack-core": "^0.8.3",
     "banana-mail": "^1.0.0",
     "bcrypt": "^3.0.2",
     "dotenv": "^6.1.0",
-    "eslint-config-airbnb": "^17.1.0",
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
+    "googleapis": "^35.0.0",
     "graphql": "^14.0.2",
     "jsonwebtoken": "^8.3.0",
     "mongoose": "^5.3.13"
@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "eslint": "^5.8.0",
+    "eslint-config-airbnb": "^17.1.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jsx-a11y": "^6.1.2",
     "eslint-plugin-react": "^7.11.1"

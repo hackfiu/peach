@@ -96,6 +96,25 @@ const verify = async (verificationToken) => {
   }
 };
 
+/**
+ * Finds the user with the given userId if the requester has appropriate permissions.
+ * @param {*} requesterId The ID of the user requesting the information.
+ * @param {*} requesterLevel The level of the user requesting the information.
+ * @param {*} userId The ID of the user whose information is being requested.
+ */
+const find = async (requesterId, requesterLevel, userId) => {
+  try {
+    const isAuthorized = requesterLevel === 'ADMIN' || userId === requesterId;
+    if (!requesterId || !isAuthorized) {
+      throw new AuthenticationError('Not allowed to fetch this user');
+    }
+    const user = await User.findById(userId);
+    return user;
+  } catch (err) {
+    throw err;
+  }
+};
+
 export default {
-  updateStatus, signUp, logIn, verify,
+  updateStatus, signUp, logIn, verify, find,
 };

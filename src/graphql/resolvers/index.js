@@ -1,7 +1,7 @@
+import user from './queries/user';
+
 import { signUp, logIn, verify } from './mutations/user';
 import { updateApplication, submitApplication } from './mutations/application';
-
-import user from './queries/user';
 
 const resolvers = {
   Query: {
